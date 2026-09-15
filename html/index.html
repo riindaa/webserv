@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Webserv</title>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <header>
+            <div class="container">
+                <h1>🌐 Webserv</h1>
+
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/upload.html">Upload</a></li>
+                        <li><a href="/cgi-bin/">CGI</a></li>
+                        <li><a href="/does-not-exist">404 Test</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <h2>42 Webserv Project</h2>
+
+                <p>
+                    This page is served by our HTTP server implementation.
+                </p>
+
+                <a href="#features" class="button">
+                    Discover Features
+                </a>
+            </section>
+
+            <section id="features" class="features">
+                <div class="card">
+                    <h3>GET</h3>
+                    <p>
+                        Static files are correctly served.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>POST</h3>
+                    <p>
+                        Test form submissions and uploads.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>CGI</h3>
+                    <p>
+                        Execute dynamic scripts.
+                    </p>
+                </div>
+            </section>
+
+            <section class="demo-form">
+                <h2>POST Request Test</h2>
+
+                <form action="/submit" method="POST">
+                    <label for="name">Name</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required>
+
+                    <button type="submit">
+                        Send
+                    </button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>
+                Webserv • 42 School Project
+            </p>
+        </footer>
+    </body>
+</html>
