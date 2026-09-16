@@ -1,5 +1,12 @@
+#include "MockHttpResponse.hpp"
 #include "HttpResponse.hpp"
 #include <sstream>
+
+void processRequest(HttpRequest req, ServerConfig config)
+{
+    (void)req;
+    (void)config;
+}
 
 std::string HttpResponse::toString() const
 {
