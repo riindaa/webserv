@@ -1,8 +1,7 @@
 #include "ServerSocket.hpp"
 
-ServerSocket::ServerSocket(int port, const std::string &host): _host(host)
+ServerSocket::ServerSocket(int port, const std::string &host) : _host(host), _port(port), _fd(-1)
 {
-    _port = port;
 }
 
 ServerSocket::~ServerSocket()
@@ -34,9 +33,9 @@ bool ServerSocket::set_sockopt()
     {
         std::cerr << "Error setsockopt: " << std::strerror(errno) << "\n";
         closeSocket();
-        return 1;
+        return false;
     }
-    return (0);
+    return (true);
 }
 
 bool ServerSocket::set_bind()
@@ -44,16 +43,18 @@ bool ServerSocket::set_bind()
     sockaddr_in addr;
     std::memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = INADDR_ANY;
-    addr.sin_port = htons(8080);
+    addr.sin_addr.s_addr = inet_addr(_host.c_str());
+    if (addr.sin_addr.s_addr = INADDR_NONE)
+        addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    addr.sin_port = htons(_port);
 
-    if (bind(_fd, reinterpret_cast<sockaddr*>(&addr), sizeof(addr)) < 0)
+    if (bind(_fd, reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) < 0)
     {
         std::cerr << "Error bind\n";
         closeSocket();
-        return 1;
+        return false;
     }
-    return 0;
+    return true;
 }
 
 int ServerSocket::getFd() const
@@ -66,39 +67,41 @@ int ServerSocket::getPort() const
     return _port;
 }
 
-const std::string& ServerSocket::getHost() const
+const std::string &ServerSocket::getHost() const
 {
     return _host;
 }
 
-
 void ServerSocket::closeSocket()
 {
-    close(_fd);
+    if (_fd != -1)
+        close(_fd);
+    _fd = -1;
 }
 
 bool ServerSocket::setup()
 {
     _fd = socket(AF_INET, SOCK_STREAM, 0);
     if (_fd < 0)
-        {
-            std::cerr << "Error\n";
-            return 1;
-        }
+    {
+        std::cerr << "Error\n";
+        return false;
+    }
 
-    if (set_sockopt())
-        return 1;
-    
+    if (!set_sockopt())
+        return false;
+
     if (!set_non_blocking())
-        return 1;   
+        return false;
 
-    if (set_bind())
-        return 1;
-    
+    if (!set_bind())
+        return false;
+
     if (listen(_fd, SOMAXCONN) < 0)
     {
         std::cerr << "Error listen: " << std::strerror(errno) << "\n";
         closeSocket();
-        return 1;
+        return false;
     }
+    return true;
 }

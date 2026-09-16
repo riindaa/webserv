@@ -1,20 +1,21 @@
 #ifndef SERVERSOCKET_HPP
 #define SERVERSOCKET_HPP
 
-# include <string>
-# include <stdexcept>
-# include <cstring>
-# include <cerrno>
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <netinet/in.h>
-# include <arpa/inet.h>
-# include <iostream>
+#include <arpa/inet.h>
+#include <cerrno>
+#include <cstring>
+#include <fcntl.h>
+#include <iostream>
+#include <netinet/in.h>
+#include <stdexcept>
+#include <string>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h>
 
-class ServerSocket {
-    private:
+class ServerSocket
+{
+  private:
     int _fd;
     int _port;
     std::string _host;
@@ -23,7 +24,7 @@ class ServerSocket {
     bool set_sockopt();
     bool set_bind();
 
-    public:
+  public:
     ServerSocket(int port, const std::string &host);
     ~ServerSocket();
 
@@ -31,7 +32,7 @@ class ServerSocket {
 
     int getFd() const;
     int getPort() const;
-    const std::string& getHost() const;
+    const std::string &getHost() const;
 
     void closeSocket();
 };
