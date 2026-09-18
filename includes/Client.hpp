@@ -33,6 +33,7 @@ class Client
         std::string getRealname() const;
         std::string getInBuff() const;
         std::string getOutBuff() const;
+        std::map<std::string, Channel*> getChannels() const;
 };
 
 #endif

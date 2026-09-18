@@ -22,6 +22,7 @@ class Server
   private:
     int _fd;
     int _port;
+    std::string _password;
     std::string _host;
     std::map<int,  Client*> _clients;
     std::map<std::string, Channel*> _channels;
@@ -32,7 +33,7 @@ class Server
     bool set_bind();
 
   public:
-    Server(int port, const std::string &host);
+    Server(int port, const std::string &host, std::string password);
     ~Server();
 
     bool setup();

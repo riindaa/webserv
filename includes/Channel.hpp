@@ -5,12 +5,14 @@
 #include <vector>
 #include <map>
 
+class Client;
+
 class Channel
 {
-    std::string path;
-    std::vector<std::string> allowedMethods;
-    std::string root;
-    std::string index;
+    std::string _name;
+    std::string _topic;
+    std::map<std::string, Client*> _clients;
+    
     bool autoindex;
     std::string cgiExtension;
     std::string cgiPath;
