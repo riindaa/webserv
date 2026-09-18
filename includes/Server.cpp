@@ -1,14 +1,14 @@
-#include "ServerSocket.hpp"
+#include "Server.hpp"
 
-ServerSocket::ServerSocket(int port, const std::string &host) : _host(host), _port(port), _fd(-1)
+Server::Server(int port, const std::string &host) : _host(host), _port(port), _fd(-1)
 {
 }
 
-ServerSocket::~ServerSocket()
+Server::~Server()
 {
 }
 
-bool ServerSocket::set_non_blocking()
+bool Server::set_non_blocking()
 {
     int flags = fcntl(_fd, F_GETFL, 0);
     if (flags < 0)
@@ -26,7 +26,7 @@ bool ServerSocket::set_non_blocking()
     return true;
 }
 
-bool ServerSocket::set_sockopt()
+bool Server::set_sockopt()
 {
     int opt = 1;
     if (setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
@@ -38,7 +38,7 @@ bool ServerSocket::set_sockopt()
     return (true);
 }
 
-bool ServerSocket::set_bind()
+bool Server::set_bind()
 {
     sockaddr_in addr;
     std::memset(&addr, 0, sizeof(addr));
@@ -57,29 +57,29 @@ bool ServerSocket::set_bind()
     return true;
 }
 
-int ServerSocket::getFd() const
+int Server::getFd() const
 {
     return _fd;
 }
 
-int ServerSocket::getPort() const
+int Server::getPort() const
 {
     return _port;
 }
 
-const std::string &ServerSocket::getHost() const
+const std::string &Server::getHost() const
 {
     return _host;
 }
 
-void ServerSocket::closeSocket()
+void Server::closeSocket()
 {
     if (_fd != -1)
         close(_fd);
     _fd = -1;
 }
 
-bool ServerSocket::setup()
+bool Server::setup()
 {
     _fd = socket(AF_INET, SOCK_STREAM, 0);
     if (_fd < 0)
