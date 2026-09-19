@@ -10,32 +10,48 @@ class Client;
 class Channel
 {
     private:
-        std::string _name;
-        std::string _topic;
-        std::string _key;
+        std::string             _name;
+        std::string             _topic;
+        std::string             _key;
 
         std::map<Client*, bool> _clients;
-        std::set<Client*> _invitedClients;
-
-        size_t _userLimit;
-        bool _inviteOnly;
-        bool _topicRestricted;
+        std::set<Client*>       _invitedClients;
+        size_t                  _userLimit;
+        bool                    _inviteOnly;
+        bool                    _topicRestricted;
 
     public:
-        Channel();
+        Channel(const std::string& name, const std::string& key = "");
         ~Channel();
 
-        std::string getKey() const;
-        std::string getTopic() const;
-        std::string getName() const;
+        const std::string&             getName() const;
+        const std::string&             getTopic() const;
+        const std::string&             getKey() const;
+        size_t                         getUserLimit() const;
+        bool                           isInviteOnly() const;
+        bool                           isTopicRestricted() const;
 
-        std::map<Client*, bool> getClients() const;
-        std::set<Client*> getInvitedClients() const;
+        const std::map<Client*, bool>& getClients() const;
+        const std::set<Client*>&       getInvitedClients() const;
 
-        size_t getuserlimit() const;
+        bool                           isMember(Client* client) const;
+        bool                           isOperator(Client* client) const;
+        bool                           isInvited(Client* client) const;
 
-        bool    isInviteOnly() const;
-        bool    isTopicRestricted();
+        void                           setTopic(const std::string& topic);
+        void                           setKey(const std::string& key);
+        void                           setUserLimit(size_t limit);
+        void                           setInviteOnly(bool mode);
+        void                           setTopicRestricted(bool mode);
+
+        void                           addClient(Client* client, bool isOp = false);
+        void                           removeClient(Client* client);
+        void                           setOperator(Client* client, bool isOp);
+        
+        void                           addInvite(Client* client);
+        void                           removeInvite(Client* client);
+
+        void                           broadcast(const std::string& message, Client* sender = NULL);
 };
 
 #endif

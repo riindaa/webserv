@@ -1,6 +1,6 @@
 #include "Server.hpp"
 
-Server::Server(int port, const std::string &host) : _host(host), _port(port), _fd(-1)
+Server::Server(int port, const std::string &host, const std::string &password) : _host(host), _port(port), _fd(-1), _password(password)
 {
 }
 
@@ -44,7 +44,7 @@ bool Server::set_bind()
     std::memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = inet_addr(_host.c_str());
-    if (addr.sin_addr.s_addr = INADDR_NONE)
+    if (addr.sin_addr.s_addr == INADDR_NONE)
         addr.sin_addr.s_addr = htonl(INADDR_ANY);
     addr.sin_port = htons(_port);
 
@@ -55,6 +55,16 @@ bool Server::set_bind()
         return false;
     }
     return true;
+}
+
+const std::map<int,  Client*> &Server::getClients() const
+{
+    return _clients;
+}
+
+const std::map<std::string, Channel*>& Server::getChannels() const
+{
+    return _channels;
 }
 
 int Server::getFd() const
@@ -104,4 +114,14 @@ bool Server::setup()
         return false;
     }
     return true;
+}
+
+void Server::setClient(Client* newClient)
+{
+    _clients.insert(std::make_pair(newClient->getFd(), newClient));
+}
+
+void Server::setChannel(Channel* newChannel)
+{
+    _channels.insert(std::make_pair(newChannel->getName(), newChannel));
 }

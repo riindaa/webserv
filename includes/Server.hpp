@@ -33,15 +33,15 @@ class Server
     bool set_bind();
 
   public:
-    Server(int port, const std::string &host, std::string password);
+    Server(int port, const std::string &host, const std::string &password);
     ~Server();
 
     bool setup();
 
     int getFd() const;
     int getPort() const;
-    std::map<int,  Client*> getClients() const;
-    std::map<std::string, Channel*> getChannels() const;
+    const std::map<int,  Client*>& getClients() const;
+    const std::map<std::string, Channel*>& getChannels() const;
     const std::string &getHost() const;
 
     void setChannel(Channel* newChannel);
