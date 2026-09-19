@@ -1,6 +1,7 @@
 #include "Server.hpp"
 
-Server::Server(int port, const std::string &host, const std::string &password) : _host(host), _port(port), _fd(-1), _password(password)
+Server::Server(int port, const std::string &host, const std::string &password)
+    : _host(host), _port(port), _fd(-1), _password(password)
 {
 }
 
@@ -57,12 +58,12 @@ bool Server::set_bind()
     return true;
 }
 
-const std::map<int,  Client*> &Server::getClients() const
+const std::map<int, Client *> &Server::getClients() const
 {
     return _clients;
 }
 
-const std::map<std::string, Channel*>& Server::getChannels() const
+const std::map<std::string, Channel *> &Server::getChannels() const
 {
     return _channels;
 }
@@ -116,12 +117,12 @@ bool Server::setup()
     return true;
 }
 
-void Server::setClient(Client* newClient)
+void Server::setClient(Client *newClient)
 {
     _clients.insert(std::make_pair(newClient->getFd(), newClient));
 }
 
-void Server::setChannel(Channel* newChannel)
+void Server::setChannel(Channel *newChannel)
 {
     _channels.insert(std::make_pair(newChannel->getName(), newChannel));
 }
