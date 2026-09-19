@@ -15,9 +15,10 @@ class Client
     std::string _username;
     std::string _realname;
 
-    std::string _InBuff;
-    std::string _OutBuff;
+    std::string _inBuff;
+    std::string _outBuff;
 
+    bool _isRegistered;
     bool _hasPassword;
 
     std::set<Channel *> _channels;
@@ -33,11 +34,15 @@ class Client
     const std::string &getRealname() const;
     const std::string &getInBuff() const;
     const std::string &getOutBuff() const;
-    const std::set<std::string, Channel *> &getChannels() const;
+    const std::set<Channel *> &getChannels() const;
 
     void setNickname(const std::string &nick);
     void setUsername(const std::string &user);
     void setRealname(const std::string &real);
+
+    bool hasPass() const;
+    bool isRegistered() const;
+
     void setHasPass(bool hasPass);
     void setIsRegistered(bool registered);
 
