@@ -18,7 +18,6 @@ class Client
         std::string _InBuff;
         std::string _OutBuff;
 
-        bool _isRegistered;
         bool _hasPassword;
 
         std::set<Channel*> _channels;
@@ -37,6 +36,8 @@ class Client
         std::map<std::string, Channel*> getChannels() const;
         
         bool isOperator() const;
+        bool isRegistered() const;
+        bool hasPass() const;
 
         void setChannel(Channel *newChannel);
 

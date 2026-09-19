@@ -40,13 +40,12 @@ class Server
 
     int getFd() const;
     int getPort() const;
-    Client* getClient(int fd) const;
-    Channel* getChannel(std::string chan) const;
-    std::map<int,  Client*> getAllClients(int fd) const;
-    std::map<std::string, Channel*> getAllChannels(std::string ChanName) const;
+    std::map<int,  Client*> getClients() const;
+    std::map<std::string, Channel*> getChannels() const;
     const std::string &getHost() const;
 
-    void setChannel(std::string ChanName);
+    void setChannel(Channel* newChannel);
+    void setClient(Client* newClient);
 
     void closeSocket();
 };

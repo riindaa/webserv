@@ -17,13 +17,25 @@ class Channel
         std::map<Client*, bool> _clients;
         std::set<Client*> _invitedClients;
 
-        size_t _user_limit;
+        size_t _userLimit;
         bool _inviteOnly;
         bool _topicRestricted;
 
     public:
         Channel();
         ~Channel();
+
+        std::string getKey() const;
+        std::string getTopic() const;
+        std::string getName() const;
+
+        std::map<Client*, bool> getClients() const;
+        std::set<Client*> getInvitedClients() const;
+
+        size_t getuserlimit() const;
+
+        bool    isInviteOnly() const;
+        bool    isTopicRestricted();
 };
 
 #endif
