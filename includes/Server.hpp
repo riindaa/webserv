@@ -24,7 +24,7 @@ class Server
     int _port;
     std::string _password;
     std::string _host;
-    std::map<int,  Client*> _clients;
+    std::map<int, Client*> _clients;
     std::map<std::string, Channel*> _channels;
 
 
@@ -40,9 +40,13 @@ class Server
 
     int getFd() const;
     int getPort() const;
-    Client* getClient() const;
-    Channel* getChannel() const;
+    Client* getClient(int fd) const;
+    Channel* getChannel(std::string chan) const;
+    std::map<int,  Client*> getAllClients(int fd) const;
+    std::map<std::string, Channel*> getAllChannels(std::string ChanName) const;
     const std::string &getHost() const;
+
+    void setChannel(std::string ChanName);
 
     void closeSocket();
 };

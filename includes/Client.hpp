@@ -2,29 +2,30 @@
 #define CLIENT_HPP
 
 #include <string>
-#include <map>
+#include <set>
 
 class Channel;
-
-enum AUTHENTIFICATION_STATE
-{
-    VALID,
-    INVALID
-};
 
 class Client
 {
     private:
         int _fd;
+
         std::string _nickname;
         std::string _username;
         std::string _realname;
+
         std::string _InBuff;
         std::string _OutBuff;
-        std::map<std::string, Channel*> _channels;
+
+        bool _isRegistered;
+        bool _hasPassword;
+
+        std::set<Channel*> _channels;
 
     public:
         Client();
+        Client(std::string _nickname, std::string _username, std::string _realname);
         ~Client();
 
         int getFd() const;
@@ -34,6 +35,12 @@ class Client
         std::string getInBuff() const;
         std::string getOutBuff() const;
         std::map<std::string, Channel*> getChannels() const;
+        
+        bool isOperator() const;
+
+        void setChannel(Channel *newChannel);
+
+        void closeClient();
 };
 
 #endif
